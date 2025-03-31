@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            height: 100vh;
+            background: url('assets/images/admin-login.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background-color: rgba(0, 0, 0, 0.7); 
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0px 4px 8px rgba(84, 83, 83, 0.2); 
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container text-white">
+        <h2 class="text-center mb-4">Admin Login</h2>
+        <form id="adminLoginForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control bg-dark text-white" id="email" placeholder="admin@example.com" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control bg-dark text-white" id="password" placeholder="********" required>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" id="loginButton">Login</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="#" class="text-white-50">Forgot Password?</a>
+        </div>
+        <div id="errorMessage" style="display: none;" class="alert alert-danger mt-2 text-center"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+            });
+
+            // Handle form submission
+            document.getElementById('adminLoginForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const errorElement = document.getElementById('errorMessage');
+                const loginButton = document.getElementById('loginButton');
+                
+                // Clear previous errors
+                errorElement.style.display = 'none';
+                
+                // Validate inputs
+                if (!email || !password) {
+                    showError('Please enter both email and password');
+                    return;
+                }
+                
+                // Show loading state
+                loginButton.disabled = true;
+                loginButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Authenticating...';
+                
+                try {
+                    const response = await fetch('http://localhost:8080/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Authentication failed');
+                    }
+                    
+                    if (data.accessToken && data.refreshToken) {
+                        // Store tokens
+                        localStorage.setItem('accessToken', data.accessToken);
+                        localStorage.setItem('refreshToken', data.refreshToken);
+                        
+                        // Redirect to admin home
+                        window.location.href = '/adminhome.html';
+                    } else {
+                        throw new Error('Invalid response from server');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showError(error.message || 'Incorrect email or password. Please try again.');
+                } finally {
+                    loginButton.disabled = false;
+                    loginButton.textContent = 'Login';
+                }
+            });
+            
+            function showError(message) {
+                const errorElement = document.getElementById('errorMessage');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

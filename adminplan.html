@@ -1,0 +1,662 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Management</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            height: 100vh; 
+            overflow: hidden; /* Prevent scrolling */
+        }
+        .sidebar {
+            width: 250px; 
+            height: 100vh; /* Full height */
+            position: fixed; /* Make sidebar fixed */
+            top: 0; /* Align to top */
+            left: 0; /* Align to left */
+            background-color: #343a40; /* Sidebar background color */
+            padding-top: 20px; /* Add some padding at the top */
+        }
+        .sidebar .nav-link {
+        color: #333;
+        padding: 10px;
+        margin-bottom: 5px;
+        border-left: 3px solid transparent;
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+        transition: all 0.3s ease;
+    }
+    .sidebar .nav-link:hover {
+        border-left: 3px solid #ffc107;
+        border-right: 3px solid #ffc107;
+        background-color: #c8c8c9;
+        color: black;
+    }
+    .sidebar .nav-link.active {
+        background-color: #c5c5c5; 
+        border-left: 3px solid #6a11cb; 
+        border-right: 3px solid #6a11cb;
+        color:black;
+    }
+        .main-content {
+            margin-left: 250px; /* Space for sidebar */
+            flex-grow: 1; 
+            overflow-y: auto; /* Allow vertical scrolling in main content */
+        }
+        nav.navbar {
+            z-index: 1000; /* Ensure the header is above other elements */
+        }
+    </style>
+</head>
+<body class="bg-white text-dark">
+    <div class="d-flex flex-column sidebar bg-light text-dark vh-100">
+        <!-- Profile Section -->
+        <div class="text-center">
+            <img src="assets/images/admin-profile.jpg" class="rounded-circle img-fluid" width="80" height="80">
+            <h5 class="mt-2" style="color: rgb(153, 17, 168);">Amritha</h5>
+            <h3 class="mt-1 " style="color: rgb(90, 11, 99);">Master Admin</h3>
+        </div>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a id="dashboardLink" href="adminhome.html" class="nav-link text-dark">
+                    <i class="bi bi-grid-fill text-me-2"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a id="userManagementLink" href="user-management.html" class="nav-link text-dark">
+                    <i class="bi bi-person-fill me-2"></i> User Management
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-darkactive">
+                    <i class="bi bi-gem me-2"></i> Plan Management
+                </a>
+            </li>
+            <li>
+                <a href="staticpage.html" class="nav-link text-dark">
+                    <i class="bi bi-table me-2"></i> Performance Overview
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg bg-black sticky-top">
+            <a class="navbar-brand fw-bold text-light fs-4 ms-3" href="adminhome.html">ṃȏɞı-ċȏṃṃ</a>
+            <div class="ml-auto ms-auto me-4">
+                <img src="assets/images/admin-profile.jpg" class="rounded-circle" width="40" height="40">
+            </div>
+        </nav>
+        <div class="container-fluid-expland-lg">
+            <div class="text-white p-3 mb-4" style="background-color: #41075e;">
+                <h3 class="text-primary">Plan Management</h3>
+            </div>
+        </div>
+
+        <div class="accordion accordion-flush rounded-4 overflow-hidden" id="planAccordion">
+            <!-- Popular Plans -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingPopular">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePopular" aria-expanded="false" aria-controls="collapsePopular">
+                        Popular Plans
+                    </button>
+                </h2>
+                <div id="collapsePopular" class="accordion-collapse collapse" aria-labelledby="headingPopular" data-bs-parent="#planAccordion">
+                    <div class="accordion-body bg-light">
+                        <table class="table table-light table-striped">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>Plan ID</th>
+                                    <th>Data</th>
+                                    <th>Validity</th>
+                                    <th>Voice</th>
+                                    <th>SMS</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="popularPlansTableBody">
+                                <!-- Data will be populated dynamically -->
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPlanModal">Add New Plan</button>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- 5G Plans -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading5G">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5G" aria-expanded="false" aria-controls="collapse5G">
+                        5G Plans
+                    </button>
+                </h2>
+                <div id="collapse5G" class="accordion-collapse collapse" aria-labelledby="heading5G" data-bs-parent="#planAccordion">
+                    <div class="accordion-body bg-light">
+                        <table class="table table-light table-striped">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>Plan ID</th>
+                                    <th>Data</th>
+                                    <th>Validity</th>
+                                    <th>Voice</th>
+                                    <th>SMS</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="5gPlansTableBody">
+                                <!-- Data will be populated dynamically -->
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPlanModal">Add New Plan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Unlimited Plans -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingUnlimited">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnlimited" aria-expanded="false" aria-controls="collapseUnlimited">
+                        Unlimited Plans
+                    </button>
+                </h2>
+                <div id="collapseUnlimited" class="accordion-collapse collapse" aria-labelledby="headingUnlimited" data-bs-parent="#planAccordion">
+                    <div class="accordion-body bg-light">
+                        <table class="table table-light table-striped">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>Plan ID</th>
+                                    <th>Data</th>
+                                    <th>Validity</th>
+                                    <th>Voice</th>
+                                    <th>SMS</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="UnlimitedPlansTableBody">
+                                <!-- Data will be populated dynamically -->
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPlanModal">Add New Plan</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entertainment Plans -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEntertainment">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEntertainment" aria-expanded="false" aria-controls="collapseEntertainment">
+                        Entertainment Plans
+                    </button>
+                </h2>
+                <div id="collapseEntertainment" class="accordion-collapse collapse" aria-labelledby="headingEntertainment" data-bs-parent="#planAccordion">
+                    <div class="accordion-body bg-light">
+                        <table class="table table-light table-striped">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>Plan ID</th>
+                                    <th>Data</th>
+                                    <th>Validity</th>
+                                    <th>Voice</th>
+                                    <th>SMS</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="EntertainmentPlansTableBody">
+                                <!-- Data will be populated dynamically -->
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPlanModal">Add New Plan</button>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Annual Plans -->
+             <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAnnual">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAnnual" aria-expanded="false" aria-controls="collapseAnnual">
+                        Annual Plans
+                    </button>
+                </h2>
+                <div id="collapseAnnual" class="accordion-collapse collapse" aria-labelledby="headingAnnual" data-bs-parent="#planAccordion">
+                    <div class="accordion-body bg-light">
+                        <table class="table table-light table-striped">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>Plan ID</th>
+                                    <th>Data</th>
+                                    <th>Validity</th>
+                                    <th>Voice</th>
+                                    <th>SMS</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AnnualPlansTableBody">
+                                <!-- Data will be populated dynamically -->
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPlanModal">Add New Plan</button>
+                    </div>
+                </div>
+            </div>
+         <!-- Data Addon Plans -->
+         <div class="accordion-item">
+            <h2 class="accordion-header" id="headingDataAddon">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDataAddon" aria-expanded="false" aria-controls="collapseDataAddon">
+                    Data Addon Plans
+                </button>
+            </h2>
+            <div id="collapseDataAddon" class="accordion-collapse collapse" aria-labelledby="headingDataAddon" data-bs-parent="#planAccordion">
+                <div class="accordion-body bg-light">
+                    <table class="table table-light table-striped">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th>Plan ID</th>
+                                <th>Data</th>
+                                <th>Validity</th>
+                                <th>Voice</th>
+                                <th>SMS</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="DataAddonTableBody">
+                            <!-- Data will be populated dynamically -->
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPlanModal">Add New Plan</button>
+                </div>
+            </div>
+        </div>
+
+         <!-- Data Plans -->
+         <div class="accordion-item">
+            <h2 class="accordion-header" id="headingDatapack">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDatapack" aria-expanded="false" aria-controls="collapseDatapack">
+                    Data Plans
+                </button>
+            </h2>
+            <div id="collapseDatapack" class="accordion-collapse collapse" aria-labelledby="headingDatapack" data-bs-parent="#planAccordion">
+                <div class="accordion-body bg-light">
+                    <table class="table table-light table-striped">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th>Plan ID</th>
+                                <th>Data</th>
+                                <th>Validity</th>
+                                <th>Voice</th>
+                                <th>SMS</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="DatapackPlansTableBody">
+                            <!-- Data will be populated dynamically -->
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPlanModal">Add New Plan</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+            <!-- Edit Plan Modal -->
+<div class="modal fade" id="editPlanModal" tabindex="-1" aria-labelledby="editPlanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPlanModalLabel">Edit Plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editPlanForm">
+                    <div class="mb-3">
+                        <label for="editPlanID" class="form-label">Plan ID</label>
+                        <input type="text" class="form-control" id="editPlanID" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editData" class="form-label">Data</label>
+                        <input type="text" class="form-control" id="editData">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editValidity" class="form-label">Validity</label>
+                        <input type="text" class="form-control" id="editValidity">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editVoice" class="form-label">Voice</label>
+                        <input type="text" class="form-control" id="editVoice">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSMS" class="form-label">SMS</label>
+                        <input type="text" class="form-control" id="editSMS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAmount" class="form-label">Amount</label>
+                        <input type="text" class="form-control" id="editAmount">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="savePlanChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addPlanModal" tabindex="-1" aria-labelledby="addPlanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPlanModalLabel">Add New Plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addPlanForm">
+                    <div class="mb-3">
+                        <label for="newPlanID" class="form-label">Plan ID</label>
+                        <input type="text" class="form-control" id="newPlanID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newName" class="form-label">Plan Name</label>
+                        <input type="text" class="form-control" id="newName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newData" class="form-label">Data</label>
+                        <input type="text" class="form-control" id="newData" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newValidity" class="form-label">Validity</label>
+                        <input type="text" class="form-control" id="newValidity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newVoice" class="form-label">Voice</label>
+                        <input type="text" class="form-control" id="newVoice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newSMS" class="form-label">SMS</label>
+                        <input type="text" class="form-control" id="newSMS" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newAmount" class="form-label">Amount</label>
+                        <input type="text" class="form-control" id="newAmount" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newEntertainment" class="form-label">Entertainment</label>
+                        <input type="text" class="form-control" id="newEntertainment">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="newDescription"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newBadge" class="form-label">Badge</label>
+                        <input type="text" class="form-control" id="newBadge">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newCategory" class="form-label">Category</label>
+                        <select class="form-control" id="newCategory" required>
+                            <option value="Popular">Popular</option>
+                            <option value="5G">5G</option>
+                            <option value="Unlimited">Unlimited</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Annual">Annual</option>
+                            <option value="Data Addon">Data Addon</option>
+                            <option value="Data Pack">Data Pack</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="newIsActive">
+                        <label class="form-check-label" for="newIsActive">Is Active</label>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="newIsPopular">
+                        <label class="form-check-label" for="newIsPopular">Is Popular</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveNewPlan">Save Plan</button>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('http://localhost:8080/admin/adminplan', {
+            credentials: 'include' 
+        });
+    
+
+        fetchAndPopulatePlans('popular', 'popularPlansTableBody');
+        fetchAndPopulatePlans('5g', '5gPlansTableBody');
+        fetchAndPopulatePlans('Unlimited', 'UnlimitedPlansTableBody');
+        fetchAndPopulatePlans('Entertainment', 'EntertainmentPlansTableBody');
+        fetchAndPopulatePlans('Annual', 'AnnualPlansTableBody');
+        fetchAndPopulatePlans('Data Pack', 'DatapackPlansTableBody');
+        fetchAndPopulatePlans('Data Addon', 'DataAddonTableBody');
+    } catch (error) {
+        console.error('Error checking admin session:', error);
+       
+    }
+});
+async function fetchAndPopulatePlans(category, tableBodyId) {
+    try {
+        let url;
+        if (category === 'popular') {
+            url = 'http://localhost:8080/plans/popular';
+        } else {
+            url = `http://localhost:8080/plans/category/${category}`;
+        }
+
+        const response = await fetch(url);
+        const plans = await response.json();
+
+        const tableBody = document.getElementById(tableBodyId);
+        tableBody.innerHTML = ''; 
+
+        plans.forEach(plan => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${plan.newid}</td>
+                <td>${plan.data}</td>
+                <td>${plan.validity}</td>
+                <td>${plan.calls}</td>
+                <td>${plan.sms}</td>
+                <td>${plan.price}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editPlanModal" data-plan-id="${plan.id}">Edit</button>
+        <button class="btn btn-${plan.active ? 'danger' : 'success'} btn-sm toggle-btn" data-plan-id="${plan.id}" data-active="${plan.active}">
+            ${plan.active ? 'Inactivate' : 'Activate'}
+        </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const planId = this.getAttribute('data-plan-id');
+                const currentStatus = this.getAttribute('data-active') === 'true';
+                await togglePlanStatus(planId, !currentStatus, this);
+            });
+        });
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const planId = this.getAttribute('data-plan-id');
+                await populateEditModal(planId);
+            });
+        });
+        document.querySelectorAll('.inactivate-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const planId = this.getAttribute('data-plan-id');
+                await inactivatePlan(planId);
+            });
+        });
+    } catch (error) {
+        console.error('Error fetching plans:', error);
+    }
+}
+async function togglePlanStatus(planId, newStatus, button) {
+    try {
+        const response = await fetch(`http://localhost:8080/plans/${planId}/toggle-active`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ is_active: newStatus })
+        });
+
+        if (response.ok) {
+            button.setAttribute('data-active', newStatus);
+            button.classList.toggle('btn-danger', newStatus);
+            button.classList.toggle('btn-success', !newStatus);
+            button.textContent = newStatus ? 'Inactivate' : 'Activate';
+        } else {
+            console.error('Failed to toggle plan status:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error toggling plan status:', error);
+    }
+}
+async function populateEditModal(planId) {
+    try {
+        const response = await fetch(`http://localhost:8080/plans/${planId}`);
+        const plan = await response.json();
+
+        document.getElementById('editPlanID').value = plan.newid;
+        document.getElementById('editData').value = plan.data;
+        document.getElementById('editValidity').value = plan.validity;
+        document.getElementById('editVoice').value = plan.calls;
+        document.getElementById('editSMS').value = plan.sms;
+        document.getElementById('editAmount').value = plan.price;
+        document.getElementById('editPlanModal').setAttribute('data-plan-id', planId);
+    } catch (error) {
+        console.error('Error fetching plan details:', error);
+    }
+}
+
+document.getElementById('saveNewPlan').addEventListener('click', async function () {
+    const newPlan = {
+        planId: document.getElementById('newPlanID').value,
+        name: document.getElementById('newName').value,
+        data: document.getElementById('newData').value,
+        validity: document.getElementById('newValidity').value,
+        calls: document.getElementById('newVoice').value,
+        sms: document.getElementById('newSMS').value,
+        price: document.getElementById('newAmount').value,
+        entertainment: document.getElementById('newEntertainment').value || null,
+        description: document.getElementById('newDescription').value || null,
+        badge: document.getElementById('newBadge').value || null,
+        category: document.getElementById('newCategory').value,
+        isActive: document.getElementById('newIsActive').checked,
+        isPopular: document.getElementById('newIsPopular').checked
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/plans', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newPlan)
+        });
+
+        if (response.ok) {
+            alert('Plan added successfully!');
+            location.reload();
+        } else {
+            console.error('Failed to add plan:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error adding plan:', error);
+    }
+});
+
+// Fetch data for each category when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAndPopulatePlans('popular', 'popularPlansTableBody');
+    fetchAndPopulatePlans('5g', '5gPlansTableBody');
+    fetchAndPopulatePlans('Unlimited', 'UnlimitedPlansTableBody');
+    fetchAndPopulatePlans('Entertainment', 'EntertainmentPlansTableBody');
+    fetchAndPopulatePlans('Annual', 'AnnualPlansTableBody');
+    fetchAndPopulatePlans('Data Pack', 'DatapackPlansTableBody');    
+    fetchAndPopulatePlans('Data Addon', 'DataAddonTableBody');  
+});
+
+document.getElementById('saveNewPlan').addEventListener('click', async function () {
+    const newPlan = {
+        newid: document.getElementById('newPlanID').value,
+        name: document.getElementById('newName').value,
+        data: document.getElementById('newData').value,
+        validity: parseInt(document.getElementById('newValidity').value),
+        calls: document.getElementById('newVoice').value,
+        sms: document.getElementById('newSMS').value,
+        price: parseFloat(document.getElementById('newAmount').value),
+        entertainment: document.getElementById('newEntertainment').value,
+        description: document.getElementById('newDescription').value,
+        badge: document.getElementById('newBadge').value,
+        category: document.getElementById('newCategory').value,
+        isActive: document.getElementById('newIsActive').checked,
+        isPopular: document.getElementById('newIsPopular').checked
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/plans', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPlan)
+        });
+
+        if (response.ok) {
+            // Close the modal
+            const addModal = bootstrap.Modal.getInstance(document.getElementById('addPlanModal'));
+            addModal.hide();
+
+            // Refresh the table to reflect the new plan
+            fetchAndPopulatePlans('popular', 'popularPlansTableBody');
+            fetchAndPopulatePlans('5g', '5gPlansTableBody');
+            fetchAndPopulatePlans('Unlimited', 'UnlimitedPlansTableBody');
+            fetchAndPopulatePlans('Entertainment', 'EntertainmentPlansTableBody');
+            fetchAndPopulatePlans('Annual', 'AnnualPlansTableBody');
+            fetchAndPopulatePlans('Data Pack', 'DatapackPlansTableBody');    
+            fetchAndPopulatePlans('Data Addon', 'DataAddonTableBody');  
+        } else {
+            console.error('Failed to add new plan:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error adding new plan:', error);
+    }
+});
+
+const accordionItems = document.querySelectorAll('.accordion-item');
+accordionItems.forEach((item) => {
+    const button = item.querySelector('.accordion-button');
+    const collapse = item.querySelector('.accordion-collapse');
+
+    collapse.addEventListener('show.bs.collapse', function () {
+        button.classList.add('bg-primary', 'text-white'); 
+    });
+
+    collapse.addEventListener('hide.bs.collapse', function () {
+        button.classList.remove('bg-primary', 'text-white'); 
+    });
+});
+    </script>
+</body>
+</html>

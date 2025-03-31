@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobi-Comm Home</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<style>
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.1);
+  transition: background 0.4s ease-in-out;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.navbar-nav .nav-link {
+  color: white !important;
+  margin-left: 15px;
+}
+.navbar-nav .nav-link i {
+  font-size: 1.2rem;
+}
+
+.video-section {
+  position: relative;
+  height: 95vh;
+  overflow: hidden;
+}
+
+#video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 0;
+}
+
+.video-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  z-index: 1;
+}
+
+.video-content h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.video-content .lead {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.video-content .quote {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+.gradient-btn {
+    background: transparent;
+    color: white;
+    letter-spacing: 0.1rem;
+    padding: 12px 12px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    border-radius: 50px; 
+    border: 3px solid transparent; 
+    background-image: linear-gradient(black, black), 
+                      linear-gradient(90deg, #6a11cb, #c42495);
+    background-origin: border-box;
+    background-clip: padding-box, border-box; 
+    transition: background 0.4s ease-in-out, color 0.4s ease-in-out; 
+}
+.gradient-btn:hover {
+    color: white; 
+    background-image: linear-gradient(90deg, #6a11cb, #c42495); 
+}
+.gradient-btnn {
+    background: transparent;
+    color: black;
+    letter-spacing: 0.1rem;
+    padding: 12px 12px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    border-radius: 50px; 
+    border: 3px solid transparent; 
+    background-image: linear-gradient(white, white), 
+                      linear-gradient(90deg, #6a11cb, #c42495);
+    background-origin: border-box;
+    background-clip: padding-box, border-box; 
+    transition: background 0.4s ease-in-out, color 0.4s ease-in-out; 
+}
+.gradient-btnn:hover {
+    color: white; 
+    background-image: linear-gradient(90deg, #6a11cb, #c42495); 
+}
+.custom-btn{
+  background: transparent;
+    color: white; 
+    letter-spacing: 0.1rem;
+    padding: 15px 60px; 
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    border-radius: 50px; 
+    border: 3px solid transparent; 
+    background-image: linear-gradient(90deg, #6a11cb, #c42495); 
+    background-origin: border-box;
+    background-clip: padding-box, border-box; 
+    transition: background 0.4s ease-in-out, color 0.4s ease-in-out, transform 0.2s ease-in-out; 
+    width: 100%; 
+    max-width: 800px; 
+    text-align: center;
+}
+.custom-btn:hover {
+    transform: scale(1.05); 
+}
+.curved-bottom {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px; 
+    height: 70px; 
+    background: white;
+    clip-path: path('M0 70 C80 70 120 10 160 10 S240 70 320 70 Z');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.curved-bottom i {
+    font-size: 2rem;
+    color: #6a11cb; 
+    animation: bounce 1.5s infinite;
+} 
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+.input-underline {
+  border: none; 
+  border-bottom: 2px solid #6a11cb; 
+  border-bottom: 2px solid ; 
+  border-radius: 0; 
+  background: transparent; 
+  box-shadow: none !important;
+  padding-left: 0; 
+  padding-right: 0;
+}
+.input-underline:focus {
+  border-bottom: 2px solid #590aad; 
+  outline: none; 
+}
+.form-floating label {
+  color: #4f4c4c; 
+  transition: all 0.2s ease-in-out; 
+}
+
+.form-floating input:focus + label,
+.form-floating input:not(:placeholder-shown) + label {
+  color: #515053; 
+  transform: scale(0.85) translateY(-1.5rem) translateX(0); 
+}
+.form-container {
+  border: none; 
+  border-radius: 15px; 
+  box-shadow: 0 4px 15px rgba(123, 2, 253, 0.3);
+  padding: 20px; 
+  background: white;
+}
+
+.experience-section {
+  background: black;
+  padding: 80px 0;
+  color: white;
+}
+.experience-section h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 30px 20px;
+  text-align: center;
+  width: 250px;
+  transition: all 0.4s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  background: linear-gradient(90deg, #6a11cb, #c42495); 
+  transform: translateY(-10px);
+}
+
+.card i {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  transition: all 0.4s ease-in-out;
+  background: linear-gradient(90deg, #6a11cb, #c42495);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card:hover i {
+  color: white;
+  background: transparent;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  transition: all 0.4s ease-in-out;
+  color:white;
+}
+.card p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.4s ease-in-out;
+}
+
+.popular-plans-section {
+  background: white;
+  padding: 80px 0;
+  color: white;
+}
+
+.popular-plans-section h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 60px;
+  color: black; 
+}
+
+.plan-card-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.plan-card {
+  background: rgb(49, 4, 69);
+  border-radius: 15px;
+  padding: 40px 20px;
+  text-align: center;
+  width: 300px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
+}
+.plan-card::before {
+  display: none;
+}
+
+.plan-card:hover {
+  box-shadow: 0 0 20px rgba(232, 121, 242, 0.6);
+  transform: translateY(-10px);
+}
+.plan-card h3 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(45deg, #ff00ff, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.plan-card ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.plan-card ul li {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.plan-card ul li::before {
+  content: '✔️';
+  margin-right: 10px;
+  color: #ffd700; 
+}
+
+.plan-card .badge {
+  background: rgba(255, 215, 0, 0.2); 
+  color: #ffd700;
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  position: absolute;
+  top: 5px;
+  left: 80%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.plan-card .buy-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 9px 40px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(45deg, #ff00ff, #8a2be2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.buy-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 9px 40px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(45deg, #ff00ff, #8a2be2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.underline {
+            border-bottom: 2px solid #ae09dc;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+/* Button Styling */
+.btn-light {
+  background: white;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.btn-light:hover {
+  background: #6a11cb;
+  color: white;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+ @media (max-width: 768px) {
+    .navbar-brand {
+      font-size: 1.2rem;
+    }
+    .navbar-nav .nav-link {
+      font-size: 0.9rem;
+      margin-left: 10px;
+    }
+    .video-content h1 {
+      font-size: 2rem;
+    }
+    .video-content .lead {
+      font-size: 1.2rem;
+    }
+    .video-content .quote {
+      font-size: 1rem;
+    }
+    .form-section h2 {
+      font-size: 1.5rem;
+    }
+    .form-section p {
+      font-size: 0.9rem;
+    }
+    .form-container {
+      padding: 15px;
+    }
+    .custom-btn {
+      font-size: 14px;
+      padding: 10px 30px;
+    }
+    .experience-section h2 {
+      font-size: 2rem;
+    }
+    .card {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+    }
+    .popular-plans-section h2 {
+      font-size: 2rem;
+    }
+    .plan-card {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .plan-card h3 {
+      font-size: 1.5rem;
+    }
+    .plan-card p {
+      font-size: 0.9rem;
+    }
+    .plan-card ul li {
+      font-size: 0.9rem;
+    }
+    .bsb-faq-2 h2 {
+      font-size: 1.8rem;
+    }
+    .bsb-faq-2 .lead {
+      font-size: 1rem;
+    }
+    .accordion-button {
+      font-size: 0.9rem;
+    }
+    .accordion-body {
+      font-size: 0.9rem;
+    }
+    footer h5 {
+      font-size: 1.2rem;
+    }
+    footer p {
+      font-size: 0.9rem;
+    }
+    footer .small {
+      font-size: 0.8rem;
+    }
+  }
+</style>  
+<body>
+      <!-- Header -->
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand ms-4" href="#">ṃȏɞı-ċȏṃṃ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar Items -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="plans.html">Plans</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#loginOffcanvas"><i class="bi bi-person-circle"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> 
+  </header>
+
+      <!-- Offcanvas for Login -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="loginOffcanvas" style="background-color: #000; color: #fff;">
+  <div class="offcanvas-header">
+      <h5 class="offcanvas-title fs-bold fs-4">
+          <i class="bi bi-chat-heart-fill me-2"></i>Welcome to MobiCom
+      </h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column align-items-center">
+      <!-- Step 1: Enter Mobile Number and Email -->
+      <div id="step1" class="w-75">
+          <p class="text-white mb-4 text-center">Unlock the full potential of MobiCom by logging in. Let's get started!</p>
+          <h3 class="text-center"> Login here</h3>
+          <div class="mb-3">
+              <label>Mobile Number</label>
+              <input type="text" class="form-control bg-dark text-white text-center" id="loginMobileNumber" placeholder="Enter your mobile number" style="width: 100%; max-width: 250px; margin: 0 auto;">
+          </div>
+          <div class="mb-3">
+              <label>Email</label>
+              <input type="email" class="form-control bg-dark text-white text-center" id="email" placeholder="Enter your email" style="width: 100%; max-width: 250px; margin: 0 auto;">
+          </div>
+          <div id="errorMessage" class="text-danger mb-3 text-center" style="display: none;"></div>
+          <button class="btn btn-primary w-100" onclick="sendOTP()" style="max-width: 250px; margin: 0 auto;"> Generate OTP</button>
+      </div>
+
+      <!-- Step 2: Enter OTP -->
+      <div id="step2" class="w-75" style="display: none;">
+          <p class="text-white mb-4 text-center">We've sent an OTP to your email. Please check your inbox and enter the OTP below.</p>
+          <div class="d-flex justify-content-center mb-3">
+              <input type="text" class="form-control otp-input bg-dark text-white text-center mx-1" maxlength="1" oninput="moveToNext(this)" style="width: 50px;">
+              <input type="text" class="form-control otp-input bg-dark text-white text-center mx-1" maxlength="1" oninput="moveToNext(this)" style="width: 50px;">
+              <input type="text" class="form-control otp-input bg-dark text-white text-center mx-1" maxlength="1" oninput="moveToNext(this)" style="width: 50px;">
+              <input type="text" class="form-control otp-input bg-dark text-white text-center mx-1" maxlength="1" oninput="moveToNext(this)" style="width: 50px;">
+          </div>
+          <div id="otpErrorMessage" class="text-danger mb-3 text-center" style="display: none;"></div>
+          <button class="btn btn-success w-100" onclick="verifyOTP()" style="max-width: 250px; margin: 0 auto;">🚀 Login</button>
+      </div>
+
+      <!-- Success Message -->
+      <div id="successMessage" class="alert alert-success mt-3 text-center" style="display: none;">
+          <i class="bi bi-chat-heart-fill me-2"></i>🎉 You have successfully logged into MobiCom! Redirecting to your dashboard...
+      </div>
+  </div>
+</div>
+
+  <!-- Video Section -->
+  <section class="video-section">
+    <div class="video-overlay"></div>
+    <video autoplay muted loop id="video-bg">
+      <source src="assets/videos/earth_rotate1.mp4" type="video/mp4">
+    </video>
+    <div class="video-content text-center">
+      <h1>Welcome to<br><span style="padding-top: 15px;">ṃȏɞı-ċȏṃṃ</span></h1>
+      <p class="lead">Your trusted partner for mobile prepaid recharge.</p>
+      <p class="quote">"Stay connected, always."</p>
+      <div class="pt-4"><button class="gradient-btn" onclick="window.location.href='about.html'">Tap to know more</button></div>
+    </div>
+    <div class="curved-bottom">
+        <i class="bi bi-chevron-double-down bounce"></i>
+    </div>
+  </section>
+
+ <!-- Recharge Section -->
+<section class="form-section pt-4 pb-5 mb-5 bg-white">
+  <div class="container pt-4 position-relative">
+   
+    <div class="row justify-content-center"> 
+      <div class="col-12 text-center"> 
+        <div class="quotes-container pb-5">
+          <p id="quote-text" class="quote-text fs-3 fw-bold fst-italic text-primary"></p>
+        </div>
+      </div>
+      <div class="col-12 text-center"> 
+        <div class="form-container mx-auto" style="max-width: 600px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <h2 class="text-center pb-2">Mobile Recharge</h2>
+          <p class="text-center pb-3">
+            <span style="letter-spacing: 0.1rem; font-size: 12px; font-weight: 400;">
+              ENTER YOUR NUMBER TO FIND THE BEST PREPAID PLANS
+            </span>
+          </p>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control shadow-none input-underline" id="qmobileNumber" placeholder="Enter Mobile Number" autocomplete="off" oninput="validateNumber(this)" maxlength="10">
+            <label for="mobileNumber">Enter your number</label>
+          </div>
+          <div id="qerrorMessage" class="text-danger mb-3" style="display: none;"></div>
+          <div class="text-center mt-3">
+            <button class="custom-btn rounded-pill px-4 py-2 fw-bold" onclick="redirectToPlan()">Recharge</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- Experience the Difference Section -->
+  <section class="experience-section pt-5">
+    <div class="container">
+      <h2 class="pt-5" data-aos="fade-up">Experience the Difference</h2>
+      <div class="card-container pt-3">
+        <div class="card ps-1" data-aos="fade-up">
+          <i class="bi bi-lightning"></i>
+          <h3>Instant & Hassle-Free Transactions</h3>
+          <p>Recharge your mobile in just a few taps! With our ultra-fast processing system, your balance gets updated instantly—no more waiting, no delays, just seamless transactions.</p>
+        </div>
+        <div class="card ms-1 me-1" data-aos="fade-up">
+          <i class="bi bi-cash-coin"></i>
+          <h3>Exclusive Offers & Cashback</h3>
+          <p>Get the most out of every recharge! Enjoy unbeatable deals, discounts, and cashback rewards, ensuring you always get more value with every top-up.</p>
+        </div>
+        <div class="card ms-1 me-1" data-aos="fade-up">
+          <i class="bi bi-shield-check"></i>
+          <h3>100% Safe & Trusted Payments</h3>
+          <p>Your security is our priority. With encrypted transactions and multi-layer authentication, we ensure a safe and secure payment experience every time.</p>
+        </div>
+        <div class="card pe-1" data-aos="fade-up">
+          <i class="bi bi-headset"></i>
+          <h3>Always Here to Help</h3>
+          <p>Stuck with a recharge issue? Our dedicated customer support team is available 24/7 to assist you instantly—because your convenience matters to us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top 3 Popular Plans Section -->
+  <section class="popular-plans-section">
+    <div class="container">
+      <h2 class="text-dark" data-aos="fade-up">Top 3 Popular Plans</h2>
+      <div class="plan-card-container" data-aos="fade-up" id="popularPlansContainer">
+      </div>
+    </div>
+  </section> 
+<!-- Buy Plan Modal -->
+<div class="modal fade" id="buyPlanModal" tabindex="-1" aria-labelledby="buyPlanModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="buyPlanModalLabel">Just One More Step...</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Enter your mobile number to proceed to payment.</p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control shadow-none input-underline" id="modalMobileNumber" placeholder="Enter Mobile Number" autocomplete="off" oninput="validateNumber(this)" maxlength="10">
+          <label for="modalMobileNumber">Enter your number</label>
+        </div>
+        <div id="modalErrorMessage" class="text-danger mb-3" style="display: none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="buy-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- FAQ Section -->
+<section class="bsb-faq-2 bg-light py-3 py-md-5 py-xl-8 mt-3">
+  <div class="container">
+    <div class="row gy-5 gy-lg-0">
+      <div class="col-12 col-lg-6">
+        <h2 class="h1 mb-3 mt-5 ms-2">How can we help you? Unlocking possibilities for your mobile recharge – FAQs answered.. </h2>
+        <p class="lead fs-4 text-secondary mb-4 ms-2">We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.</p>
+        <a href="#!" class="btn btn-lg bsb-btn-2xl gradient-btnn ms-2">All FAQ</a>
+      </div>
+      <div class="col-12 col-lg-6 mt-5">
+        <div class="row justify-content-xl-end">
+          <div class="col-12 col-xl-11">
+            <div class="accordion accordion-flush" id="accordionExample">
+              <div class="accordion-item mb-4 shadow-sm">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    How Do I Recharge My Mobile?
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <p>To recharge your mobile, follow these steps:</p>
+                    <ul>
+                      <li>Go to our website or open the Mobi-Comm app.</li>
+                      <li>Enter your mobile number.</li>
+                      <li>Choose your preferred recharge plan.</li>
+                      <li>Complete the payment using your desired payment method.</li>
+                      <li>Your recharge will be processed instantly, and you’ll receive a confirmation SMS.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-4 shadow-sm">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    What Payment Methods Are Accepted?
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                  <div class="accordion-body">
+                    We accept multiple payment options, including credit/debit cards, UPI, net banking, and mobile wallets, ensuring a smooth and secure transaction.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-4 shadow-sm">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Will I Get a Confirmation After Recharge?
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                  <div class="accordion-body">
+                    Yes! You will receive an instant confirmation via SMS and email with your recharge details. You can also check your transaction history in the app.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-4 shadow-sm">
+                <h2 class="accordion-header" id="headingFour">
+                  <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    What Happens If My Recharge Fails?
+                  </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">
+                  <div class="accordion-body">
+                    In case of a failed recharge, your amount will be refunded automatically within 24–48 hours. If the issue persists, contact our support team for assistance.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item shadow-sm">
+                <h2 class="accordion-header" id="headingFive">
+                  <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Can I Recharge for Someone Else?
+                  </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive">
+                  <div class="accordion-body">
+                    Absolutely! Just enter their mobile number instead of yours, select a plan, and complete the payment. The recharge will be credited to their account instantly.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-dark text-light pt-5 pb-4">
+  <div class="container">
+      <div class="row">
+
+          <!-- About Section -->
+          <div class="col-md-3">
+              <h5 class="mb-3 underline">Mobi-Comm</h5>
+              <p class="small">Your trusted mobile recharge platform, providing seamless and secure prepaid recharge services anytime, anywhere.</p>
+              <div class="pb-4">
+                  <a href="#" class="me-3"><i class="bi bi-twitter"></i></a>
+                  <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+                  <a href="#"><i class="bi bi-instagram"></i></a>
+              </div>
+          </div>
+          <div class="col-md-3">
+              <h5 class="mb-3 underline">Latest Offers</h5>
+              <div class="d-flex align-items-center mb-2">
+                  <img src="offer1.jpg" class="me-2 rounded" width="50" height="50" alt="Offer">
+                  <div>
+                      <p class="small mb-1">Get 20% cashback on your first recharge</p>
+                      <small>Valid till March 31, 2025</small>
+                  </div>
+              </div>
+              <div class="d-flex align-items-center pb-4">
+                  <img src="offer2.jpg" class="me-2 rounded" width="50" height="50" alt="Offer">
+                  <div>
+                      <p class="small mb-1">Refer & Earn! Get ₹50 on every successful referral</p>
+                      <small>Limited period offer</small>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-3">
+              <h5 class="mb-3 underline">Quick Links</h5>
+              <ul class="list-unstyled pb-2">
+                  <li><a href="#" class="text-light small" style="text-decoration: none;">Home</a></li>
+                  <li><a href="#" class="text-light small" style="text-decoration: none;">Prepaid Recharge</a></li>
+                  <li><a href="#" class="text-light small" style="text-decoration: none;">DTH Recharge</a></li>
+                  <li><a href="#" class="text-light small" style="text-decoration: none;">Bill Payments</a></li>
+                  <li><a href="#" class="text-light small" style="text-decoration: none;">Offers & Rewards</a></li>
+                  <li><a href="#" class="text-light small" style="text-decoration: none;">Customer Support</a></li>
+              </ul>
+          </div>
+
+          <div class="col-md-3">
+              <h5 class="mb-3 underline">Need Help?</h5>
+              <p class="small"><i class="fas fa-map-marker-alt me-2"></i>123 Recharge Street, New York, USA</p>
+              <p class="small"><i class="fas fa-phone me-2"></i>+1 800 555 6789</p>
+              <p class="small"><i class="fas fa-envelope me-2"></i>support@mobi-comm.com</p>
+          </div>
+
+      </div>
+      <div class="text-center pt-4 border-top mt-3">
+          <p class="small">&copy; 2025 All rights reserved | Powered by <a href="home.html" class="text-light" style="text-decoration: none;">Mobi-Comm</a></p>
+      </div>
+
+  </div>
+</footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+     AOS.init();
+    function proceedToPayment() {
+    const mobileNumber = document.getElementById('modalMobileNumber').value;
+    const errorMessageDiv = document.getElementById('modalErrorMessage');
+
+    if (mobileNumber.length === 10 && !isNaN(mobileNumber)) {
+        // Save the mobile number to localStorage or state management
+        localStorage.setItem('mobileNumber', mobileNumber);
+
+        // Redirect to the payment page
+        window.location.href = '/payment.html'; // Replace with your payment page URL
+    } else {
+        errorMessageDiv.textContent = 'Please enter a valid 10-digit mobile number.';
+        errorMessageDiv.style.display = 'block';
+    }
+}
+    // async function checkUser() {
+    //     const mobileNumber = document.getElementById("mobileNumber").value;
+    //     const errorMessageDiv = document.getElementById("errorMessage");
+
+    //     if (mobileNumber.length !== 10 || isNaN(mobileNumber)) {
+    //         errorMessageDiv.textContent = "Please enter a valid 10-digit mobile number.";
+    //         errorMessageDiv.style.display = "block";
+    //         return;
+    //     }
+
+    //     try {
+    //         const response = await fetch(`http://localhost:8080/user/check?mobileNumber=${mobileNumber}`);
+
+    //         if (response.status === 200) {
+    //             localStorage.setItem("mobileNumber", mobileNumber);
+    //             errorMessageDiv.style.display = "none";
+                
+    //             sendOTP(mobileNumber);
+    //         } else {
+    //             errorMessageDiv.textContent = "Please enter a valid Mobicomm number.";
+    //             errorMessageDiv.style.display = "block";
+    //         }
+    //     } catch (error) {
+    //         console.error("Error checking user:", error);
+    //         alert("An error occurred. Please try again.");
+    //     }
+    // }
+       // Function to send OTP
+    // Function to send OTP
+function sendOTP() {
+    const mobileNumber = document.getElementById('loginMobileNumber').value;
+    const email = document.getElementById('email').value;
+    const errorMessageDiv = document.getElementById('errorMessage');
+
+    // Clear previous error messages
+    errorMessageDiv.textContent = '';
+    errorMessageDiv.style.display = 'none';
+
+    // Validate inputs
+    if (!mobileNumber || !email) {
+        errorMessageDiv.textContent = "Please enter both mobile number and email.";
+        errorMessageDiv.style.display = 'block';
+        return;
+    }
+
+    // Validate mobile number length
+    if (mobileNumber.length !== 10 || isNaN(mobileNumber)) {
+        errorMessageDiv.textContent = "Please enter a valid 10-digit mobile number.";
+        errorMessageDiv.style.display = 'block';
+        return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        errorMessageDiv.textContent = "Please enter a valid email address.";
+        errorMessageDiv.style.display = 'block';
+        return;
+    }
+
+    // Send request to backend to check user and send OTP
+    fetch('http://localhost:8080/log/send-otp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mobileNumber, email }), 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('User not found or invalid credentials');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Hide Step 1 and show Step 2
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        errorMessageDiv.textContent = "User not found or invalid credentials. Please try again.";
+        errorMessageDiv.style.display = 'block';
+    });
+}
+
+// Function to verify OTP
+function verifyOTP() {
+    const otpInputs = document.querySelectorAll('.otp-input');
+    const otp = Array.from(otpInputs).map(input => input.value).join('');
+    const email = document.getElementById('email').value; // Retrieve email from Step 1
+    const otpErrorMessageDiv = document.getElementById('otpErrorMessage');
+
+    // Clear previous error messages
+    otpErrorMessageDiv.textContent = '';
+    otpErrorMessageDiv.style.display = 'none';
+
+    // Validate OTP
+    if (!otp || otp.length !== 4) {
+        otpErrorMessageDiv.textContent = "Please enter the 4-digit OTP.";
+        otpErrorMessageDiv.style.display = 'block';
+        return;
+    }
+
+    // Send request to backend to verify OTP
+    fetch('http://localhost:8080/log/verify-otp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, otp }), // Send both email and OTP for verification
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Invalid OTP');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Save the access token to localStorage
+        const accessToken = data.accessToken; 
+        localStorage.setItem('accessToken', accessToken);
+
+        // Show success message and redirect to dashboard
+        document.getElementById('successMessage').style.display = 'block';
+        setTimeout(() => {
+            window.location.href = '/userdashboard.html'; 
+        }, 1000); // Redirect after 2 seconds
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        otpErrorMessageDiv.textContent = "Invalid OTP. Please try again.";
+        otpErrorMessageDiv.style.display = 'block';
+    });
+}
+
+// Function to move to the next OTP input box
+function moveToNext(input) {
+    if (input.value.length === 1) {
+        const nextInput = input.nextElementSibling;
+        if (nextInput) {
+            nextInput.focus();
+        }
+    }
+}
+
+// Function to validate mobile number input (digits only)
+function validateNumber(input) {
+    input.value = input.value.replace(/\D/g, '');
+}
+
+// Function to redirect to plans page
+async function redirectToPlan() {
+    const mobileNumber = document.getElementById('qmobileNumber').value;
+    const errorMessageDiv = document.getElementById('qerrorMessage');
+
+    // Clear previous error messages
+    errorMessageDiv.textContent = '';
+    errorMessageDiv.style.display = 'none';
+
+    // Validate mobile number length
+    if (mobileNumber.length !== 10 || isNaN(mobileNumber)) {
+        errorMessageDiv.textContent = 'Please enter a valid 10-digit mobile number.';
+        errorMessageDiv.style.display = 'block';
+        return;
+    }
+
+    try {
+        // Save mobile number to localStorage
+        localStorage.setItem('mobileNumber', mobileNumber);
+
+        // Call the backend API to check the mobile number
+        const response = await fetch(`http://localhost:8080/user/check?mobileNumber=${mobileNumber}`);
+
+        if (response.ok) {
+            // Redirect to plans page if the mobile number is valid
+            window.location.href = '/plans.html';
+        } else {
+            // Parse the error response from the backend
+            const data = await response.json();
+            errorMessageDiv.textContent = data.message || 'Please enter a valid Mobicomm number.';
+            errorMessageDiv.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error checking user:', error);
+        errorMessageDiv.textContent = 'An error occurred. Please try again.';
+        errorMessageDiv.style.display = 'block';
+    }
+}
+
+// Function to fetch popular plans
+async function fetchPopularPlans() {
+    try {
+        const response = await fetch('http://localhost:8080/plans/popular'); 
+        const plans = await response.json();
+
+        const popularPlansContainer = document.getElementById('popularPlansContainer');
+        popularPlansContainer.innerHTML = ''; 
+
+        plans.forEach(plan => {
+            const planCard = `
+                <div class="plan-card">
+                    <span class="badge">${plan.badge}</span>
+                    <h3>${plan.name}</h3>
+                    <p><span style="letter-spacing: 0.1rem; font-size: 12px; font-weight: 400;">${plan.category.toUpperCase()}</span></p>
+                    <p style="text-align: justify; text-justify: inter-word;">${plan.description}</p>
+                    <ul>
+                        <li>${plan.validity} Days Validity</li>
+                        <li>${plan.data}</li>
+                        <li>${plan.sms}</li>
+                        <li>${plan.calls}</li>
+                    </ul>
+                    <button class="buy-btn" data-bs-toggle="modal" data-bs-target="#buyPlanModal">Buy Plan</button>
+                </div>
+            `;
+            popularPlansContainer.innerHTML += planCard;
+        });
+    } catch (error) {
+        console.error('Error fetching popular plans:', error);
+    }
+}
+
+// Event listener to fetch popular plans when the page loads
+document.addEventListener('DOMContentLoaded', fetchPopularPlans);
+
+// Function to handle scrolling and change header background
+window.addEventListener("scroll", function () {
+    let header = document.querySelector(".header");
+    let videoSection = document.querySelector(".video-section");
+    
+    if (window.scrollY > videoSection.clientHeight) {
+        header.style.background = "black";
+    } else {
+        header.style.background = "rgba(0, 0, 0, 0.1)";
+    }
+});
+
+// Function to display quotes with typing effect
+const quotes = [
+    "Stay connected, always.",
+    "Recharge anytime, anywhere.",
+    "Your trusted partner for prepaid recharge."
+];
+let currentQuoteIndex = 0;
+const quoteTextElement = document.getElementById('quote-text');
+
+function typeQuote() {
+    const currentQuote = quotes[currentQuoteIndex];
+    let charIndex = 0;
+    quoteTextElement.textContent = '';
+    quoteTextElement.style.opacity = 1;
+    const typingInterval = setInterval(() => {
+        if (charIndex < currentQuote.length) {
+            quoteTextElement.textContent += currentQuote.charAt(charIndex);
+            charIndex++;
+        } else {
+            clearInterval(typingInterval);
+            setTimeout(() => {
+                quoteTextElement.style.opacity = 0;
+                setTimeout(() => {
+                    currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+                    typeQuote();
+                }, 1000); // Wait for fade-out to complete
+            }, 2000); // Wait before fading out
+        }
+    }, 100); // Typing speed 
+}
+typeQuote();
+  </script>
+</body>
+</html>

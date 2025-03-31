@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobi-Comm Plans</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<style>
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .navbar-nav .nav-link {
+        color: white !important;
+        margin-left: 15px;
+    }
+    .navbar-nav .nav-link i {
+        font-size: 1.2rem;
+    }
+    #plansCarousel {
+        margin-top: 80px; 
+    }
+    .carousel-item img {
+        height: 300px; 
+        object-fit: cover;
+        border-radius: 15px; 
+    }
+    .carousel-caption {
+        left: 10%; 
+        right: auto;
+        text-align: left; 
+        bottom: 20%;
+    }
+    .carousel-caption h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #fff;
+    }
+    .carousel-caption p {
+        font-size: 1.2rem;
+        color: #fff;
+    }
+    .carousel-caption .btn {
+        margin-top: 10px;
+        background-color: #007bff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 1rem;
+    }
+    .plan-card {
+        max-width: 350px;
+        margin: auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: white; /* White background for card */
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .plan-price {
+        font-size: 30px;
+        font-weight: bold;
+        color: black; 
+    }
+    .plan-details p {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px 0;
+    }
+    .entertainment {
+        background-color: #f8f9fa;
+        border-top: 2px solid #ddd;
+        padding: 10px;
+        border-radius: 0 0 12px 12px;
+    }
+    .divider {
+        border: 0;
+        height: 1px;
+        background: #1f1d1d;
+        margin: 10px 0;
+    }
+    .plan-name-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #007bff;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .buy-now-btn {
+        width: 100%;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-top: 15px;
+    }
+    .underline {
+            border-bottom: 2px solid #ae09dc;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .gradient-btnn {
+    background: transparent;
+    color: black;
+    letter-spacing: 0.1rem;
+    padding: 12px 12px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    border-radius: 50px; 
+    border: 3px solid transparent; 
+    background-image: linear-gradient(white, white), 
+                      linear-gradient(90deg, #6a11cb, #c42495);
+    background-origin: border-box;
+    background-clip: padding-box, border-box; 
+    transition: background 0.4s ease-in-out, color 0.4s ease-in-out; 
+}
+.gradient-btnn:hover {
+    color: white; 
+    background-image: linear-gradient(90deg, #6a11cb, #c42495); 
+}
+.plan-categories .badge {
+    cursor: pointer;
+}
+.icon-container {
+    display: inline-block; 
+    margin: 0 5px; 
+}
+.service-icon {
+    width: 40px; 
+    height: 40px;
+    border-radius: 10px; 
+    object-fit: contain; 
+}
+.icon-wrapper {
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+    padding-bottom: 10px;
+    padding-top: 8px;
+}
+@media (max-width: 768px) {
+        .plan-categories .badge {
+            font-size: 9px !important;
+            padding: 5px 5px; 
+            margin-bottom: 5px;
+            gap: 2px; 
+        }
+
+        .plan-categories {
+            flex-direction: row; 
+        flex-wrap: nowrap; 
+        gap: 4px; 
+        overflow-x: auto;
+        align-items: center; 
+        }
+
+        .plan-card {
+            max-width: 100%; 
+            padding: 15px; 
+        }
+
+        .plan-price {
+            font-size: 24px;
+        }
+
+        .plan-details p {
+            font-size: 14px; 
+        }
+
+        .carousel-caption h3 {
+            font-size: 1rem; 
+        }
+
+        .carousel-caption p {
+            font-size: 0.8rem; 
+        }
+
+        .carousel-caption .btn {
+            padding: 8px 16px; 
+            font-size: 0.9rem; 
+        }
+
+        .carousel-item img {
+            height: 200px; 
+        }
+
+        .icon-wrapper img {
+            width: 30px; 
+            height: 30px;
+        }
+    }
+</style>
+<body style="background-color: #f4efef;">
+      <!-- Header -->
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand ms-4" href="home.html">ṃȏɞı-ċȏṃṃ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar Items -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Plans</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="bi bi-person-circle"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+<section>
+     <!-- Carousel -->
+     <div id="plansCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <img src="assets/images/plan-car1.jpeg" class="d-block w-100" alt="Slide 1">
+                <div class="carousel-caption">
+                    <h3>Family Pack</h3>
+                    <p>Stay connected with your loved ones. Enjoy unlimited calls and data for the whole family.</p>
+                    <a href="#" class="btn">Tap to Know More</a>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <img src="assets/images/plan-car2.jpeg" class="d-block w-100" alt="Slide 2">
+                <div class="carousel-caption">
+                    <h3>Republic Day Offer</h3>
+                    <p>Celebrate Republic Day with us! Get 50% off on all plans for two months.</p>
+                    <a href="#" class="btn">Tap to Know More</a>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/800x300" class="d-block w-100" alt="Slide 3">
+                <div class="carousel-caption">
+                    <h3>Special Offer</h3>
+                    <p>Exclusive deals for our loyal customers. Grab them before they expire!</p>
+                    <a href="#" class="btn">Tap to Know More</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#plansCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#plansCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Plans Section -->
+    <div class="container mt-5 pt-3">
+        <h2 class="text-center fs-1">Explore Plans</h2>
+        <p class="text-center"><span style="letter-spacing: 0.1rem; font-size: 14px; font-weight: 400;"> RECOMMENDED FOR YOU</span></p>
+
+        <!-- Plan Categories and Filter -->
+        <div class="plan-categories pt-5 d-flex justify-content-between align-items-center">
+            <div>
+                <span class="badge bg-secondary me-2 fs-6" data-category="5G">5G</span>
+                <span class="badge bg-secondary me-2 fs-6" data-category="Data Pack">Data Packs</span>
+                <span class="badge bg-secondary me-2 fs-6" data-category="Unlimited">Unlimited</span>
+                <span class="badge bg-secondary me-2 fs-6" data-category="Entertainment">Entertainment</span>
+                <span class="badge bg-secondary me-2 fs-6" data-category="Annual">Annual</span>
+                <span class="badge bg-secondary fs-6" data-category="Data Addon">Data Add-on</span>
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+            </div>
+        </div>
+<hr>
+
+<!-- Off-Canvas Filter -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="filterOffcanvas">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Filter Plans</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <h6>Filter by Amount</h6>
+        <div class="mb-3">
+            <input type="range" class="form-range" id="amountRange" min="0" max="1000" step="100">
+            <p>Selected Amount: <span id="amountValue">500</span></p>
+        </div>
+
+        <h6>Filter by Entertainment</h6>
+        <div class="mb-3">
+            <select class="form-select" id="entertainmentFilter">
+                <option value="all">All</option>
+                <option value="netflix">Netflix</option>
+                <option value="jiocinema">JioCinema</option>
+            </select>
+        </div>
+
+        <h6>Filter by Data</h6>
+        <div class="mb-3">
+            <select class="form-select" id="dataFilter">
+                <option value="all">All</option>
+                <option value="1gb">1GB/Day</option>
+                <option value="1.5gb">1.5GB/Day</option>
+                <option value="2gb">2GB/Day</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary w-100" onclick="applyFilters()">Apply Filters</button>
+    </div>
+</div>
+                <!-- Plan Cards -->
+                <div class="row" id="planCardsContainer">
+                    <!-- Plan Card 1
+                    <div class="col-md-4">
+                        <div class="card plan-card p-4 position-relative">
+                            <span class="plan-name-badge">Popular</span>
+                            <h2 class="plan-price">₹ 1198</h2>
+                            <div class="plan-details mt-3">
+                                <p><span>Calls</span> <span class="fw-semibold">Truly Unlimited</span></p>
+                                <p><span>Data</span> <span class="fw-semibold">2GB/Day</span></p>
+                                <p><span>SMS</span> <span class="fw-semibold">100 SMS/Day</span></p>
+                                <p><span>Validity</span> <span class="fw-semibold">70 Days</span></p>
+                            </div>
+                            <div class="entertainment text-center mt-3">
+                                <p class="fw-semibold mb-1">Entertainment Plans</p>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg" width="40" alt="Netflix">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/JioCinema_logo.png" width="40" alt="JioCinema">
+                            </div>
+                            <button class="gradient-btnn" onclick="redirectToPayment()">Buy Now</button>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-4">
+                        <div class="card plan-card p-4 position-relative">
+                            <span class="plan-name-badge">Best Value</span>
+                            <h2 class="plan-price">₹ 599</h2>
+                            <div class="plan-details mt-3">
+                                <p><span>Calls</span> <span class="fw-semibold">Unlimited</span></p>
+                                <p><span>Data</span> <span class="fw-semibold">1.5GB/Day</span></p>
+                                <p><span>SMS</span> <span class="fw-semibold">100 SMS/Day</span></p>
+                                <p><span>Validity</span> <span class="fw-semibold">56 Days</span></p>
+                            </div>
+                            <div class="entertainment text-center mt-3">
+                                <p class="fw-semibold mb-1">Entertainment Plans</p>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg" width="40" alt="Netflix">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/JioCinema_logo.png" width="40" alt="JioCinema">
+                            </div>
+                            <button class="gradient-btnn">Buy Now</button>
+                        </div>
+                    </div>
+    
+                    <div class="col-md-4">
+                        <div class="card plan-card p-4 position-relative">
+                            <span class="plan-name-badge">Economy</span>
+                            <h2 class="plan-price">₹ 299</h2>
+                            <div class="plan-details mt-3">
+                                <p><span>Calls</span> <span class="fw-semibold">Unlimited</span></p>
+                                <p><span>Data</span> <span class="fw-semibold">1GB/Day</span></p>
+                                <p><span>SMS</span> <span class="fw-semibold">100 SMS/Day</span></p>
+                                <p><span>Validity</span> <span class="fw-semibold">28 Days</span></p>
+                            </div>
+                            <div class="entertainment text-center mt-3">
+                                <p class="fw-semibold mb-1">Entertainment Plans</p>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg" width="40" alt="Netflix">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/JioCinema_logo.png" width="40" alt="JioCinema">
+                            </div>
+                            <button class="gradient-btnn">Buy Now</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+            <footer class="bg-dark text-light pt-5 pb-4">
+                <div class="container">
+                    <div class="row">
+              
+                        <!-- About Section -->
+                        <div class="col-md-3">
+                            <h5 class="mb-3 underline">Mobi-Comm</h5>
+                            <p class="small">Your trusted mobile recharge platform, providing seamless and secure prepaid recharge services anytime, anywhere.</p>
+                            <div>
+                                <a href="#" class="me-3"><i class="bi bi-twitter"></i></a>
+                  <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+                  <a href="#"><i class="bi bi-instagram"></i></a>
+                            </div>
+                        </div>
+              
+                        <!-- Latest News -->
+                        <div class="col-md-3">
+                            <h5 class="mb-3 underline">Latest Offers</h5>
+              <div class="d-flex align-items-center mb-2">
+                  <img src="offer1.jpg" class="me-2 rounded" width="50" height="50" alt="Offer">
+                  <div>
+                      <p class="small mb-1">Get 20% cashback on your first recharge</p>
+                      <small>Valid till March 31, 2025</small>
+                  </div>
+              </div>
+              <div class="d-flex align-items-center pb-4">
+                  <img src="offer2.jpg" class="me-2 rounded" width="50" height="50" alt="Offer">
+                  <div>
+                      <p class="small mb-1">Refer & Earn! Get ₹50 on every successful referral</p>
+                      <small>Limited period offer</small>
+                  </div>
+              </div>
+                        </div>
+              
+                        <!-- Quick Links -->
+                        <div class="col-md-3">
+                            <h5 class="mb-3 underline">Quick Links</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="text-light small" style="text-decoration: none;">Home</a></li>
+                                <li><a href="#" class="text-light small" style="text-decoration: none;">Prepaid Recharge</a></li>
+                                <li><a href="#" class="text-light small" style="text-decoration: none;">DTH Recharge</a></li>
+                                <li><a href="#" class="text-light small" style="text-decoration: none;">Bill Payments</a></li>
+                                <li><a href="#" class="text-light small" style="text-decoration: none;">Offers & Rewards</a></li>
+                                <li><a href="#" class="text-light small" style="text-decoration: none;">Customer Support</a></li>
+                            </ul>
+                        </div>
+              
+                        
+          <div class="col-md-3">
+            <h5 class="mb-3 underline">Need Help?</h5>
+            <p class="small"><i class="fas fa-map-marker-alt me-2"></i>123 Recharge Street, New York, USA</p>
+            <p class="small"><i class="fas fa-phone me-2"></i>+1 800 555 6789</p>
+            <p class="small"><i class="fas fa-envelope me-2"></i>support@mobi-comm.com</p>
+        </div>
+                    </div>
+              
+                    <!-- Copyright -->
+                    <div class="text-center pt-4 border-top mt-3">
+                        <p class="small">&copy; 2025 All rights reserved | Made with ❤️ by <a href="home.html" class="text-light" style="text-decoration: none;">Mobi-Comm.com</a></p>
+                    </div>
+              
+                </div>
+              </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+
+async function fetchPlansByCategory(category) {
+    try {
+        const response = await fetch(`http://localhost:8080/plans/category/${category}`);
+        const plans = await response.json();
+        renderPlans(plans);
+    } catch (error) {
+        console.error('Error fetching plans:', error);
+    }
+}
+
+function renderPlans(plans) {
+    const planCardsContainer = document.getElementById('planCardsContainer');
+    planCardsContainer.innerHTML = ''; 
+
+    const serviceIcons = {
+        netflix: "assets/images/netflix_icon.jpg",
+        amazon: "assets/images/amazon_logo.png",
+        jiocinema: "assets/images/jiohotstar_icon.jpg",
+        sonyliv: "assets/images/sonyliv_icon.jpg",
+    };
+
+    plans.forEach(plan => {
+        const services = plan.entertainment.toLowerCase().split(' ').map(service => service.trim());
+        const serviceIconsHTML = services.map(service => {
+            const iconUrl = serviceIcons[service];
+            if (iconUrl) {
+                return `<div class="icon-container"><img src="${iconUrl}" class="service-icon" alt="${service}"></div>`;
+            }
+            return ''; 
+        }).join('');
+
+        const planCard = `
+         <div class="col-md-4">
+                <div class="card plan-card p-4 position-relative">
+                    <span class="plan-name-badge">${plan.badge}</span>
+                    <h2 class="plan-price">₹ ${plan.price}</h2>
+                    <div class="plan-details mt-3">
+                        <p><span>Calls</span> <span class="fw-semibold">${plan.calls}</span></p>
+                        <p><span>Data</span> <span class="fw-semibold">${plan.data}</span></p>
+                        <p><span>SMS</span> <span class="fw-semibold">${plan.sms}</span></p>
+                        <p><span>Validity</span> <span class="fw-semibold">${plan.validity} Days</span></p>
+                    </div>
+                    <div class="entertainment text-center mt-3">
+                        <p class="fw-semibold mb-1">Entertainment Plans</p>
+                        ${serviceIconsHTML}
+                    </div>
+                    <button class="gradient-btnn buy-now-btn" data-plan='${JSON.stringify(plan)}'>Buy Now</button>
+                </div>
+            </div>
+        `;
+        planCardsContainer.innerHTML += planCard; 
+    });
+}
+
+// Function to handle Razorpay payment
+function handleRazorpayPayment(plan) {
+    const mobileNumber = localStorage.getItem('mobileNumber'); 
+    const defaultEmail = '2k21it04@kiot.ac.in'; 
+
+    const options = {
+        key: 'rzp_test_gONEbal6oiwV6e',
+        amount: plan.price * 100, 
+        currency: 'INR',
+        name: 'Mobi-Comm',
+        description: `Plan: ${plan.name} | Validity: ${plan.validity} Days `,
+        image: 'https://your-logo-url.com/logo.png', 
+        order_id: '', 
+        handler: function (response) {
+           // alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+           //window.location.href = 'home.html';
+           sendPaymentSuccessEmail(plan, defaultEmail);
+        },
+        prefill: {
+            email: defaultEmail, 
+            contact: mobileNumber, 
+        },
+        notes: {
+            planName: plan.name,
+            planPrice: `₹${plan.price}`,
+            planValidity: `${plan.validity} Days`,
+            planData: plan.data,
+            planCalls: plan.calls,
+            planSMS: plan.sms,
+        },
+        theme: {
+            color: '#007bff', 
+        },
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+}
+
+function sendPaymentSuccessEmail(plan, email) {
+    fetch('http://localhost:8080/log/send-payment-success-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            plan: plan
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Email sent:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+function redirectToPayment(plan) {
+    localStorage.setItem('selectedPlan', JSON.stringify(plan)); 
+    handleRazorpayPayment(plan); 
+}
+
+document.addEventListener('click', (event) => {
+    if (event.target.classList.contains('buy-now-btn')) {
+        const planCard = event.target.closest('.plan-card');
+        const plan = {
+            name: planCard.querySelector('.plan-name-badge').textContent.trim(),
+            price: parseFloat(planCard.querySelector('.plan-price').textContent.replace('₹', '').trim()),
+            calls: planCard.querySelector('.plan-details p:nth-child(1) span:last-child').textContent.trim(),
+            data: planCard.querySelector('.plan-details p:nth-child(2) span:last-child').textContent.trim(),
+            sms: planCard.querySelector('.plan-details p:nth-child(3) span:last-child').textContent.trim(),
+            validity: planCard.querySelector('.plan-details p:nth-child(4) span:last-child').textContent.replace(' Days', '').trim(),
+        };
+        console.log('Plan Details:', plan);
+        redirectToPayment(plan);   
+    }
+});
+
+document.querySelectorAll('.plan-categories .badge').forEach(badge => {
+    badge.addEventListener('click', () => {
+        const category = badge.getAttribute('data-category');
+        fetchPlansByCategory(category);
+    });
+});
+
+// Fetch and display 5G plans by default when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPlansByCategory('5g ');
+});
+
+</script>
+</body>
+</html>

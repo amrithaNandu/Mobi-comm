@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobi-Comm Payments</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<style>
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .navbar-nav .nav-link {
+        color: white !important;
+        margin-left: 15px;
+    }
+    .navbar-nav .nav-link i {
+        font-size: 1.2rem;
+    }
+    .sidebar {
+        position: fixed;
+        top: 65px; 
+        left: 0;
+        width: 250px;
+        height: calc(100vh - 65px);
+        background: linear-gradient(145deg, #f8f9fa, #e9ecef); 
+        border-right: 1px solid #ddd;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar .nav-link {
+        color: #333;
+        padding: 10px;
+        margin-bottom: 5px;
+        border-left: 3px solid transparent;
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+        transition: all 0.3s ease;
+    }
+    .sidebar .nav-link:hover {
+        background-color: #e9ecef; 
+        border-left: 3px solid #6a11cb; 
+    }
+    .sidebar .nav-link.active {
+        border-left: 3px solid #ffc107;
+        background-color: #e9ecef;
+    }
+    .sidebar-header {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #6a11cb; 
+    }
+    .sidebar-footer {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .main-content {
+        margin-left: 250px; 
+        padding: 20px;
+        margin-top: 80px; 
+    }
+    .payment-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .right-section {
+        background: linear-gradient(90deg, #6a11cb, #c42495);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+    .btn-gradient {
+        background: transparent;
+        letter-spacing: 0.1rem;
+        padding: 12px 12px;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        border-radius: 50px; 
+        border: 3px solid transparent; 
+        background-image: linear-gradient(white, white), 
+                          linear-gradient(90deg, #6a11cb, #c42495);
+        background-origin: border-box;
+        background-clip: padding-box, border-box; 
+        transition: background 0.4s ease-in-out, color 0.4s ease-in-out; 
+        width: 50%; 
+        display: block;
+        margin: 0 auto;
+    }
+    .btn-gradient:hover {
+        color: white; 
+        background-image: linear-gradient(90deg, #6a11cb, #c42495); 
+    }
+    @media (max-width: 768px) {
+        .main-content{
+            padding-top: 14px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 65px;
+            left: -250px; 
+            width: 250px;
+            height: calc(100vh - 65px);
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+        .sidebar.active {
+            left: 0; /* Show sidebar when active */
+        }
+        .main-content {
+            margin-left: 0; /* Remove margin for mobile view */
+        }
+        .right-section {
+            margin-top: 20px; /* Add space between main content and right section */
+        }
+        .btn-gradient {
+            width: 100%; /* Full width for buttons on mobile */
+        }
+        .navbar-toggler {
+            display: block; /* Show toggle button on mobile */
+        }
+        .toggle-button-container {
+        position: fixed;
+        top: 65px; /* Position below the header */
+        left: 10px; /* Position on the left */
+        z-index: 1001; /* Ensure it's above the sidebar */
+    }
+    .toggle-button-container .btn {
+        background-color: #6a11cb; /* Custom color for the button */
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    }
+    @media (min-width: 769px) {
+        .navbar-toggler {
+            display: none;
+        }
+    }
+</style>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand ms-4" href="home.html">ṃȏɞı-ċȏṃṃ</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Navbar Items -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Plans</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-person-circle"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="toggle-button-container">
+        <button class="btn" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i> Payment method
+        </button>
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">Payment Methods</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" data-target="upi">
+                    <i class="bi bi-wallet"></i> UPI
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-target="creditCard">
+                    <i class="bi bi-credit-card"></i> Credit Card
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-target="debitCard">
+                    <i class="bi bi-cash"></i> Debit Card
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-target="netBanking">
+                    <i class="bi bi-bank"></i> Net Banking
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-target="digitalWallet">
+                    <i class="bi bi-phone"></i> Digital Wallet
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <i class="bi bi-shield-lock"></i> Secure Payments
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="row">
+            <!-- Middle Section -->
+            <div class="col-md-8">
+                <div class="payment-content" id="paymentContent">
+                    <div id="upi">
+                        <h3 class="text-center" style="color: #6a11cb;">Paying via UPI</h3>
+                        <div class="mb-3">
+                            <label class="form-label">UPI ID</label>
+                            <input type="text" class="form-control" placeholder="Enter UPI ID" id="upiId"> 
+                            <div id="upiError" class="text-danger mt-2" style="display: none;"></div>
+                        </div>
+                        <p class="small text-muted"><i class="bi bi-lock"></i> Your ID is encrypted</p>
+                        <button class="btn-gradient text-dark fw-bold" id="payNowButton">Verify & Pay</button>
+                        <div class="text-center mt-3 text-dark">or</div>
+                        <h5 class="fw-bold">Pay using UPI</h5>
+                        <p class="text-muted">Scan & pay using any UPI app</p>
+                        <button class="btn-gradient text-dark fw-bold">Generate QR Code</button>
+                    </div>
+
+                    <!-- Credit Card Payment Section (Hidden by Default) -->
+                    <div id="creditCard" style="display: none;">
+                        <h3 class="text-center" style="color: #6a11cb;">Paying via Credit Card</h3>
+                        <div class="mb-3">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" class="form-control" placeholder="Enter Card Number">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" class="form-control" placeholder="MM/YY">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-control" placeholder="Enter CVV">
+                        </div>
+                        <button class="btn-gradient text-dark py-1 fw-bold">Pay Now</button>
+                    </div>
+
+                    <!-- Debit Card Payment Section (Hidden by Default) -->
+                    <div id="debitCard" style="display: none;">
+                        <h3 class="text-center" style="color: #6a11cb;">Paying via Debit Card</h3>
+                        <div class="mb-3">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" class="form-control" placeholder="Enter Card Number">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" class="form-control" placeholder="MM/YY">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-control" placeholder="Enter CVV">
+                        </div>
+                        <button class="btn-gradient w-100 py-1 text-dark fw-bold">Pay Now</button>
+                    </div>
+
+                    <!-- Net Banking Payment Section (Hidden by Default) -->
+                    <div id="netBanking" style="display: none;">
+                        <h3 class="text-center" style="color: #6a11cb;">Paying via Net Banking</h3>
+                        <div class="mb-3">
+                            <label class="form-label">Select Bank</label>
+                            <select class="form-select">
+                                <option>Bank 1</option>
+                                <option>Bank 2</option>
+                                <option>Bank 3</option>
+                            </select>
+                        </div>
+                        <button class="btn-gradient w-100 py-1 text-dark fw-bold">Proceed to Pay</button>
+                    </div>
+
+                    <!-- Digital Wallet Payment Section (Hidden by Default) -->
+                    <div id="digitalWallet" style="display: none;">
+                        <h3 class="text-center" style="color: #6a11cb;">Paying via Digital Wallet</h3>
+                        <div class="mb-3">
+                            <label class="form-label">Select Wallet</label>
+                            <select class="form-select">
+                                <option>Paytm</option>
+                                <option>PhonePe</option>
+                                <option>Google Pay</option>
+                                <option>Amazon Pay</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Wallet Number/ID</label>
+                            <input type="text" class="form-control" placeholder="Enter Wallet Number/ID">
+                        </div>
+                        <button class="btn-gradient w-100 py-1 text-dark fw-bold">Proceed to Pay</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section (Payment Details) -->
+            <div class="col-md-4">
+                <div class="right-section">
+                    <h5 class="fw-bold">Payment Details</h5>
+                    <p>Recharge for <span id="rechargeNumber">1234567890</span></p>
+                    <p class="small">Confirmation message is sent to <span id="emailAddress">some@gmail.com</span>. If you want to edit, <a href="#" data-bs-toggle="collapse" data-bs-target="#editEmail" class="text-light">click here</a>.</p>
+                    <div class="collapse" id="editEmail">
+                        <div class="mb-3 mt-2" id="emailInputGroup">
+                            <input type="email" class="form-control mb-1" placeholder="Enter new email address">
+                            <button class="btn-gradient text-primary" onclick="updateEmail()">OK</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>₹ 365</h4>
+                    <ul class="list-unstyled mt-3">
+                        <li><strong>Validity:</strong> 28 Days</li>
+                        <li><strong>Data:</strong> 1.5 GB/day</li>
+                        <li><strong>Voice:</strong> Unlimited</li>
+                        <li><strong>SMS:</strong> 100 SMS/day</li>
+                        <li><strong>Subscription:</strong> Premium Plan</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Payment Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <!-- Loading Spinner -->
+                <div class="loading-spinner mt-5" id="loadingSpinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <!-- Success Message -->
+                <div id="successMessage" style="display: none;">
+                    <h5 class="text-success">Payment Successful!</h5>
+                    <p>Your payment has been processed successfully. Enjoy uninterrupted services!</p>
+                    <button class="btn-gradient" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+                function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+    const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
+    const mobileNumber = localStorage.getItem('mobileNumber');
+
+    if (selectedPlan && mobileNumber) {
+        // Update the right section with the selected plan details
+        document.getElementById('rechargeNumber').textContent = mobileNumber;
+        document.querySelector('.right-section h4').textContent = `${selectedPlan.price}`;
+
+        const details = document.querySelectorAll('.right-section ul li');
+        details[0].innerHTML = `<strong>Validity:</strong> ${selectedPlan.validity} Days`;
+        details[1].innerHTML = `<strong>Data:</strong> ${selectedPlan.data}`;
+        details[2].innerHTML = `<strong>Voice:</strong> ${selectedPlan.calls}`;
+        details[3].innerHTML = `<strong>SMS:</strong> ${selectedPlan.sms}`;
+        details[4].innerHTML = `<strong>Subscription:</strong> ${selectedPlan.name}`;
+    } else {
+        console.error('No plan or mobile number found. Please go back and select a plan.');
+    }
+});
+        // Sidebar Navigation
+        const sidebarLinks = document.querySelectorAll('.sidebar .nav-link');
+        const paymentSections = document.querySelectorAll('#paymentContent > div');
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Remove active class from all links
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to the clicked link
+                link.classList.add('active');
+
+                // Hide all payment sections
+                paymentSections.forEach(section => section.style.display = 'none');
+                // Show the selected payment section
+                const target = link.getAttribute('data-target');
+                document.getElementById(target).style.display = 'block';
+            });
+        });
+       
+document.getElementById('payNowButton').addEventListener('click', async function () {
+    const upiId = document.getElementById('upiId').value;
+    const upiError = document.getElementById('upiError');
+
+    // Clear any previous error message
+    upiError.style.display = 'none';
+    upiError.textContent = '';
+
+    // Validate UPI ID
+    if (!upiId || !upiId.includes('@')) {
+        upiError.textContent = 'Please enter a valid UPI ID (e.g., example@upi).';
+        upiError.style.display = 'block';
+        return;
+    }
+
+    // Get the selected plan and mobile number from localStorage
+    const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
+    const mobileNumber = localStorage.getItem('mobileNumber');
+
+    if (!selectedPlan || !mobileNumber) {
+        alert('No plan or mobile number found. Please go back and select a plan.');
+        return;
+    }
+
+    // Show the modal and loading spinner
+    const modal = new bootstrap.Modal(document.getElementById('successModal'));
+    modal.show();
+    document.getElementById('loadingSpinner').style.display = 'block';
+    document.getElementById('successMessage').style.display = 'none';
+
+    try {
+        const paymentUrl = `http://localhost:8080/user/process-payment?mobileNumber=${mobileNumber}&planId=${selectedPlan.id}&paymentMethod=UPI&amount=${parseFloat(selectedPlan.price.replace('₹', '').trim())}&transactionId=txn_${Math.floor(Math.random() * 1000000)}`;
+console.log('Payment URL:', paymentUrl);
+console.log('Selected Plan:', selectedPlan);
+console.log('Mobile Number:', mobileNumber);
+        const paymentResponse = await fetch(
+            `http://localhost:8080/user/process-payment?mobileNumber=${mobileNumber}&planId=${selectedPlan.id}&paymentMethod=UPI&amount=${parseFloat(selectedPlan.price.replace('₹', '').trim())}&transactionId=txn_${Math.floor(Math.random() * 1000000)}`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }
+        );
+
+
+        if (!paymentResponse.ok) {
+            throw new Error('Payment processing failed');
+        }
+
+        const paymentData = await paymentResponse.json();
+        const paymentId = paymentData.paymentId;
+
+        const rechargeResponse = await fetch(
+            `http://localhost:8080/user/create-recharge?mobileNumber=${mobileNumber}&planId=${selectedPlan.id}&paymentId=${paymentId}`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }
+        );
+
+        if (!rechargeResponse.ok) {
+            throw new Error('Recharge creation failed');
+        }
+
+        const rechargeData = await rechargeResponse.json();
+        console.log('Recharge created:', rechargeData);
+
+        // Step 3: Show Success Message
+        setTimeout(() => {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        }, 2000); // Simulate a 2-second delay
+    } catch (error) {
+        console.error('Error during payment or recharge:', error);
+        alert('An error occurred. Please try again.');
+        modal.hide();
+    }
+});
+    </script>
+</body>
+</html>
